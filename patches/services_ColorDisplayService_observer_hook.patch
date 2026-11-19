@@ -1,0 +1,67 @@
+--- input/smali/com/android/server/display/color/ColorDisplayService.smali
++++ build/smali/com/android/server/display/color/ColorDisplayService.smali
+@@ -95,6 +95,8 @@
+ .field private final mGlobalSaturationTintController:Lcom/android/server/display/color/TintController;
+ 
+ .field final mHandler:Landroid/os/Handler;
++
++.field private mInlineSdrSaturation:Lcom/android/server/display/color/InlineSdrSaturationController;
+ 
+ .field private mNightDisplayAutoMode:Lcom/android/server/display/color/ColorDisplayService$NightDisplayAutoMode;
+ 
+@@ -4516,6 +4518,11 @@
+ 
+     invoke-interface {v2, v3}, Lcom/android/server/display/color/IColorDisplayServiceExt;->onSetUp(I)V
+ 
++    iget-object v2, p0, Lcom/android/server/display/color/ColorDisplayService;->mInlineSdrSaturation:Lcom/android/server/display/color/InlineSdrSaturationController;
++    if-eqz v2, :inline_setup_done
++    iget v3, p0, Lcom/android/server/display/color/ColorDisplayService;->mCurrentUser:I
++    invoke-virtual {v2, v3}, Lcom/android/server/display/color/InlineSdrSaturationController;->setUp(I)V
++    :inline_setup_done
+     .line 675
+     return-void
+ .end method
+@@ -4734,6 +4741,10 @@
+ 
+ .method private tearDown()V
+     .registers 4
++    iget-object v0, p0, Lcom/android/server/display/color/ColorDisplayService;->mInlineSdrSaturation:Lcom/android/server/display/color/InlineSdrSaturationController;
++    if-eqz v0, :inline_teardown_done
++    invoke-virtual {v0}, Lcom/android/server/display/color/InlineSdrSaturationController;->tearDown()V
++    :inline_teardown_done
+ 
+     .line 712
+     new-instance v0, Ljava/lang/StringBuilder;
+@@ -5131,7 +5142,7 @@
+ .end method
+ 
+ .method public onStart()V
+-    .registers 3
++    .registers 4
+ 
+     .line 278
+     new-instance v0, Lcom/android/server/display/color/ColorDisplayService$BinderService;
+@@ -5160,6 +5171,12 @@
+ 
+     invoke-virtual {p0, v0, v1}, Lcom/android/server/display/color/ColorDisplayService;->publishLocalService(Ljava/lang/Class;Ljava/lang/Object;)V
+ 
++    new-instance v0, Lcom/android/server/display/color/InlineSdrSaturationController;
++    invoke-virtual {p0}, Lcom/android/server/display/color/ColorDisplayService;->getContext()Landroid/content/Context;
++    move-result-object v1
++    iget-object v2, p0, Lcom/android/server/display/color/ColorDisplayService;->mHandler:Landroid/os/Handler;
++    invoke-direct {v0, v1, v2}, Lcom/android/server/display/color/InlineSdrSaturationController;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
++    iput-object v0, p0, Lcom/android/server/display/color/ColorDisplayService;->mInlineSdrSaturation:Lcom/android/server/display/color/InlineSdrSaturationController;
+     .line 281
+     return-void
+ .end method
+@@ -5221,6 +5238,10 @@
+ 
+     .line 357
+     :cond_31
++    iget-object v2, p0, Lcom/android/server/display/color/ColorDisplayService;->mInlineSdrSaturation:Lcom/android/server/display/color/InlineSdrSaturationController;
++    if-eqz v2, :inline_user_clear_done
++    invoke-virtual {v2}, Lcom/android/server/display/color/InlineSdrSaturationController;->tearDown()V
++    :inline_user_clear_done
+     invoke-virtual {p0}, Lcom/android/server/display/color/ColorDisplayService;->getContext()Landroid/content/Context;
+ 
+     move-result-object v1

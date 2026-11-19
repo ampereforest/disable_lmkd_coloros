@@ -1,0 +1,17 @@
+--- /dev/null
++++ b/vendor/etc/init/cos17_memkiller.rc
+@@ -0,0 +1,14 @@
++# Native rootless init definition for vendor.cos17_memkiller (0..500 MB free-RAM floor + lmkd SIGSTOP/SIGCONT controller)
++service vendor.cos17_memkiller /system/bin/sh /vendor/bin/memkiller_ctl.sh
++    class late_start
++    user root
++    group root system readproc
++    seclabel u:r:cos17_memkiller:s0
++    capabilities KILL
++    disabled
++
++on property:sys.boot_completed=1
++    start vendor.cos17_memkiller
++
++on property:sys.boot_completed=0
++    stop vendor.cos17_memkiller

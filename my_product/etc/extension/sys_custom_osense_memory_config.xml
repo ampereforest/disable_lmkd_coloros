@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <filter-conf>
+        <version>2026091102</version>
+        <filter-name>sys_custom_osense_memory_config</filter-name>
+    </filter-conf>
+
+	<!-- Relaxed 12GB aggressive killer thresholds to preserve background apps -->
+    <policy name="resRelease">
+        <config name="res_release" type="bundle">
+			<item name="trimSwitch" type="bool" value="false"/>
+			<item name="thermal" type="int" value="44"/>
+			<item name="trimNum" type="int" value="2"/>
+			<item name="resSwitch" type="bool" value="false"/>
+        </config>
+
+        <config name="trim_blacklist" type="stringList">
+            <item name="android"/>
+        </config>
+
+        <config name="pkgdisable_list" type="stringList">
+            <item name="com.oplus.thirdkt"/>
+        </config>
+		
+		<config name="restore_list" type="stringList">
+            <item name="com.oplus.thirdkt"/>
+            <item name="com.oplus.eyeprotect"/>
+            <item name="com.oplus.uxdesign"/>
+            <item name="com.oplus.themestore"/>
+            <item name="com.oplus.linker"/>
+			<item name="com.heytap.market"/>
+			<item name="com.heytap.themestore"/>
+			<item name="com.heytap.pictorial"/>
+        </config>
+    </policy>
+	
+	<policy name="gameScene">
+        <config name="gameSceneConfig" type="bundle">
+			<item name="switch" type="bool" value="true"/>
+			<item name="thermal" type="int" value="44"/>
+			<item name="cpuLoad" type="int" value="95"/>
+			<item name="freeMemThreshold" type="string"    value="2|100-3|100-4|100-6|100-8|100-12|100-16|150-24|200"/>
+			<item name="freeMemTarget" type="string"       value="2|150-3|150-4|150-6|150-8|150-12|180-16|250-24|300"/>
+			<item name="psiFreeMemThreshold" type="string" value="2|80-3|80-4|80-6|80-8|80-12|80-16|120-24|160"/>
+			<item name="psiFreeMemTarget" type="string"    value="2|120-3|120-4|120-6|120-8|120-12|150-16|200-24|250"/>
+			<item name="fileRatioThreshold" type="string"  value="2|20-3|20-4|20-6|20-8|20-12|20-16|20-24|20"/>
+			<item name="fileMemThreshold" type="string"    value="2|200-3|200-4|200-6|300-8|400-12|500-16|800-24|1200"/>
+			<item name="appMinBgCount" type="string"       value="2|4-3|6-4|8-6|12-8|16-12|24-16|32-24|40"/>
+        </config>
+    </policy>
+	
+    <policy name="swap">
+        <config name="swap" type="bundle">
+			<item name="switch" type="bool" value="true"/>
+			<item name="nandSwitch" type="bool" value="true"/>
+			<item name="nandSupportMemSizeStr" type="string" value="6-8-12"/>
+			<item name="thermal" type="int" value="40"/>
+			<item name="scrOffThermal" type="int" value="40"/>
+			<item name="skipScreenOff" type="bool" value="false"/>
+			<item name="zramLoad" type="int" value="95"/>
+			<item name="cpuLoad" type="int" value="90"/>
+			<item name="delayAfterFreeze" type="long" value="10000"/>
+			<item name="delayAfterBg" type="long" value="15000"/>
+			<item name="adaptiveOffsetEnable" type="bool" value="true"/>
+			<item name="maxShrinBytes" type="long" value="102400"/>
+			<item name="maxSwapOutBytes" type="long" value="102400"/>
+			<item name="swapInThreshold" type="int" value="40"/>
+			<item name="inactiveAnonRatioQB" type="string" value="40|55"/>
+			<item name="inactiveZramRatioQb" type="string" value="10|15"/>
+			<item name="inactiveAnonRatio" type="string" value="45|60|60"/>
+			<item name="inactiveZramRatio" type="string" value="20|25|30"/>
+			<item name="inactiveInitDelay" type="long" value="180000"/>
+			<item name="inactiveNextDelay" type="long" value="60000"/>
+			<item name="inactiveMinAnonRatioInc" type="int" value="2"/>
+			<item name="inactiveMinZramRatioInc" type="int" value="2"/>
+			<item name="appAnonRatio" type="string" value="20|80|100|100"/>
+			<item name="appZramRatio" type="string" value="0|0|20|35"/>
+			<item name="appSkipDelay" type="long" value="10000"/>
+			<item name="appNextDelay" type="long" value="15000"/>
+			<item name="appLongNextDelay" type="long" value="15000"/>
+			<item name="appAnonThreshold" type="int" value="80"/>
+			<item name="appBgDurationThreshold" type="long" value="2000"/>
+			<item name="appMinAnonRatioInc" type="int" value="5"/>
+			<item name="appMinZramRatioInc" type="int" value="5"/>
+        </config>
+    </policy>
+
+	<policy name="camera">
+        <config name="cameraConfig" type="bundle">
+			<item name="aliveSwitch" type="bool" value="true"/>
+			<item name="preStartInv" type="long" value="15000"/>
+			<item name="releaseSwitch" type="bool" value="true"/>
+			<item name="releaseMaxShrinkSize" type="string"     value="2|50-3|50-4|50-6|50-8|100-12|120-16|150-24|150"/>
+			<item name="releaseAvailMemThreshold" type="string" value="2|200-3|200-4|250-6|300-8|350-12|400-16|600-24|800"/>
+			<item name="releaseMinBgCount" type="string"        value="2|4-3|6-4|8-6|10-8|14-12|20-16|24-24|32"/>
+        </config>
+    </policy>
+
+	<policy name="dynaZram">
+        <config name="dynaZramConfig" type="bundle">
+			<item name="switch" type="bool" value="true"/>
+        </config>
+    </policy>
+
+	<policy name="cMem">
+        <config name="cMemConfig" type="bundle">
+			<item name="switch" type="bool" value="true"/>
+			<item name="pollingInv" type="long" value="60000"/>
+			<item name="enterAvailMemThdStr" type="string" value="2|200-3|200-4|200-6|250-8|250-12|300-16|400-24|500"/>
+			<item name="exitAvailMemThdStr" type="string" value="2|300-3|300-4|300-6|350-8|350-12|450-16|600-24|800"/>
+			<item name="bgCntThdStr" type="string"    value="2|4-3|4-4|6-6|8-8|10-12|16-16|20-24|24"/>
+        </config>
+    </policy>
+</resources>

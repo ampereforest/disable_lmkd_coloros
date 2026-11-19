@@ -1,0 +1,27 @@
+--- a/smali_classes2/com/oplus/settings/feature/othersettings/development/OplusDevelopmentSettingsDashboardFragment.smali
++++ b/smali_classes2/com/oplus/settings/feature/othersettings/development/OplusDevelopmentSettingsDashboardFragment.smali
+@@ -105,6 +105,8 @@
+ 
+ .method private addAllCategory(Landroidx/preference/PreferenceScreen;)V
+     .registers 3
++
++    invoke-static {p0}, Lcom/oplus/settings/feature/othersettings/development/memkiller/DevMemKillerUi;->sync(Landroidx/preference/PreferenceFragmentCompat;)V
+ 
+     iget-object v0, p0, Lcom/oplus/settings/feature/othersettings/development/OplusDevelopmentSettingsDashboardFragment;->mTopCategory:Landroidx/preference/PreferenceCategory;
+ 
+@@ -1019,6 +1021,7 @@
+ 
+     iput-object p1, p0, Lcom/oplus/settings/feature/othersettings/development/OplusDevelopmentSettingsDashboardFragment;->mActivity:Landroid/app/Activity;
+ 
++    invoke-static {p0}, Lcom/oplus/settings/feature/othersettings/development/memkiller/DevMemKillerUi;->install(Landroidx/preference/PreferenceFragmentCompat;)V
+     return-void
+ .end method
+ 
+@@ -1227,6 +1230,7 @@
+     invoke-virtual {v0, p0}, Lcom/android/settings/core/CategoryMixin;->addCategoryListener(Lcom/android/settings/core/CategoryMixin$CategoryListener;)V
+ 
+     :cond_25
++    invoke-static {p0}, Lcom/oplus/settings/feature/othersettings/development/memkiller/DevMemKillerUi;->sync(Landroidx/preference/PreferenceFragmentCompat;)V
+     return-void
+ .end method
+ 
